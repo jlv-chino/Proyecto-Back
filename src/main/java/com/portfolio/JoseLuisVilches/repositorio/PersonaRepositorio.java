@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonaRepositorio extends JpaRepository<Persona, Long>{
-
-    //public Persona findBy(Long id);
     
 }

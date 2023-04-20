@@ -37,6 +37,7 @@ public class PersonaControlador {
     public Persona findPersona(){
         return repositorio.findPersona((long)1);  
     }*/
+    
     @GetMapping("/personas")
     public List<Persona> listarPersonas() {
         return repositorio.findAll();
