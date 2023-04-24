@@ -34,11 +34,8 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String nombre, String apellido,
-            String imagen, String puesto, String compania, 
-            String ubicacion, String telefono, String email,
-            String titulo_acerca_de, String acerca_de,
-            String user, String password) {
+    public Persona(long id, String nombre, String apellido, String imagen, String puesto, String compania, String ubicacion, String telefono, String email, String titulo_acerca_de, String acerca_de, String user, String password) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.imagen = imagen;

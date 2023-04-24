@@ -24,7 +24,8 @@ public class Skill {
     public Skill() {
     }
 
-    public Skill(String titulo_skill, int porcentaje_skill) {
+    public Skill(long id, String titulo_skill, int porcentaje_skill) {
+        this.id = id;
         this.titulo_skill = titulo_skill;
         this.porcentaje_skill = porcentaje_skill;
     }
