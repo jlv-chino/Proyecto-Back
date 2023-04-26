@@ -28,24 +28,24 @@ public class EducacionControlador {
     private EducacionRepositorio repositorio;
 
     @GetMapping("{id}")
-    public ResponseEntity<Educacion> obtenerPerfil(@PathVariable Long id) {
+    public ResponseEntity<Educacion> obtenerEducacion(@PathVariable Long id) {
         Educacion educacion = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
         return ResponseEntity.ok(educacion);
     }
     
     @GetMapping("/educaciones")
-    public List<Educacion> listarSkill() {
+    public List<Educacion> listarEducacion() {
         return repositorio.findAll();
     }
     
     @PostMapping("/crear")
-    public Educacion crearSkill(@RequestBody Educacion educacion) {
+    public Educacion crearEducacion(@RequestBody Educacion educacion) {
         return repositorio.save(educacion);
     }
     
      @PutMapping("/editar/{id}")
-    public ResponseEntity<Educacion> actualizarskill(@PathVariable Long id, @RequestBody Educacion nuevaEducacion) {
+    public ResponseEntity<Educacion> actualizarEducacion(@PathVariable Long id, @RequestBody Educacion nuevaEducacion) {
         Educacion educacion = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
 

@@ -1,8 +1,9 @@
+
 package com.portfolio.JoseLuisVilches.controlador;
 
 import com.portfolio.JoseLuisVilches.excepciones.ResourceNotFoundException;
-import com.portfolio.JoseLuisVilches.modelo.Skill;
-import com.portfolio.JoseLuisVilches.repositorio.SkillRepositorio;
+import com.portfolio.JoseLuisVilches.modelo.Proyecto;
+import com.portfolio.JoseLuisVilches.repositorio.ProyectoRepositorio;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,51 +20,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/skill")
+@RequestMapping("/proyecto")
 @CrossOrigin(origins = "http://localhost:4200")
-public class SkillControlador {
-
+public class ProyectoControlador {
+    
     @Autowired
-    private SkillRepositorio repositorio;
+    private ProyectoRepositorio repositorio;
 
     @GetMapping("{id}")
-    public ResponseEntity<Skill> obtenerSkill(@PathVariable Long id) {
-        Skill skill = repositorio.findById(id)
+    public ResponseEntity<Proyecto> obtenerProyecto(@PathVariable Long id) {
+        Proyecto proyecto = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
-        return ResponseEntity.ok(skill);
+        return ResponseEntity.ok(proyecto);
     }
     
-    @GetMapping("/skills")
-    public List<Skill> listarSkill() {
+    @GetMapping("/proyectos")
+    public List<Proyecto> listarProyecto() {
         return repositorio.findAll();
     }
     
     @PostMapping("/crear")
-    public Skill crearSkill(@RequestBody Skill skill) {
-        return repositorio.save(skill);
+    public Proyecto crearProyectp(@RequestBody Proyecto proyecto) {
+        return repositorio.save(proyecto);
     }
     
      @PutMapping("/editar/{id}")
-    public ResponseEntity<Skill> actualizarSkill(@PathVariable Long id, @RequestBody Skill nuevoSkill) {
-        Skill skill = repositorio.findById(id)
+    public ResponseEntity<Proyecto> actualizarProyecto(@PathVariable Long id, @RequestBody Proyecto nuevoProyecto) {
+        Proyecto proyecto = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
 
-        skill.setTitulo_skill(nuevoSkill.getTitulo_skill());
-        skill.setPorcentaje_skill(nuevoSkill.getPorcentaje_skill());
+        proyecto.setNombre_proyecto(nuevoProyecto.getNombre_proyecto());
+        proyecto.setUrl_repositorio(nuevoProyecto.getUrl_repositorio());
+        proyecto.setUrl_deploy(nuevoProyecto.getUrl_deploy());
+        proyecto.setDescripcion_proyecto(nuevoProyecto.getDescripcion_proyecto());
+        proyecto.setImagen_proyecto(nuevoProyecto.getImagen_proyecto());
 
-        Skill skillActualizado = repositorio.save(skill);
-        return ResponseEntity.ok(skillActualizado);
+        Proyecto proyectoActualizado = repositorio.save(proyecto);
+        return ResponseEntity.ok(proyectoActualizado);
     }
     
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Map<String, Boolean>> eliminarSkill(@PathVariable Long id) {
-        Skill skill = repositorio.findById(id)
+    public ResponseEntity<Map<String, Boolean>> eliminarProyecto(@PathVariable Long id) {
+        Proyecto proyecto = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese el ID : " + id));
 
-        repositorio.delete(skill);
+        repositorio.delete(proyecto);
         Map<String, Boolean> respuesta = new HashMap<>();
         respuesta.put("eliminar", Boolean.TRUE);
         return ResponseEntity.ok(respuesta);
     }
-
+    
 }
