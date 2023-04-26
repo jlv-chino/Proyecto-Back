@@ -40,7 +40,7 @@ public class ProyectoControlador {
     }
     
     @PostMapping("/crear")
-    public Proyecto crearProyectp(@RequestBody Proyecto proyecto) {
+    public Proyecto crearProyecto(@RequestBody Proyecto proyecto) {
         return repositorio.save(proyecto);
     }
     
