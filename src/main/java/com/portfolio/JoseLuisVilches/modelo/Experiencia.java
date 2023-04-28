@@ -25,12 +25,12 @@ public class Experiencia {
     String imagen_experiencia;
     String inicio_experiencia;
     String fin_experiencia;
-    Date tiempo_experiencia;
+    int tiempo_experiencia;
 
     public Experiencia() {
     }
 
-    public Experiencia(long id, String puesto_experiencia, String compania_experiencia, String modalidad_experiencia, String imagen_experiencia, String inicio_experiencia, String fin_experiencia, Date tiempo_experiencia) {
+    public Experiencia(long id, String puesto_experiencia, String compania_experiencia, String modalidad_experiencia, String imagen_experiencia, String inicio_experiencia, String fin_experiencia, int tiempo_experiencia) {
         this.id = id;
         this.puesto_experiencia = puesto_experiencia;
         this.compania_experiencia = compania_experiencia;
