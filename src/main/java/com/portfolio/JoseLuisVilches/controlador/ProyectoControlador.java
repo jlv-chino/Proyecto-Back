@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,12 +40,14 @@ public class ProyectoControlador {
         return repositorio.findAll();
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public Proyecto crearProyecto(@RequestBody Proyecto proyecto) {
         return repositorio.save(proyecto);
     }
     
-     @PutMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Proyecto> actualizarProyecto(@PathVariable Long id, @RequestBody Proyecto nuevoProyecto) {
         Proyecto proyecto = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
@@ -59,6 +62,7 @@ public class ProyectoControlador {
         return ResponseEntity.ok(proyectoActualizado);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarProyecto(@PathVariable Long id) {
         Proyecto proyecto = repositorio.findById(id)

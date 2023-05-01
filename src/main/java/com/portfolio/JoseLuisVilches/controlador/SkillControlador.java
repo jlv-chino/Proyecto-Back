@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +39,14 @@ public class SkillControlador {
         return repositorio.findAll();
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public Skill crearSkill(@RequestBody Skill skill) {
         return repositorio.save(skill);
     }
     
-     @PutMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Skill> actualizarSkill(@PathVariable Long id, @RequestBody Skill nuevoSkill) {
         Skill skill = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
@@ -55,6 +58,7 @@ public class SkillControlador {
         return ResponseEntity.ok(skillActualizado);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarSkill(@PathVariable Long id) {
         Skill skill = repositorio.findById(id)

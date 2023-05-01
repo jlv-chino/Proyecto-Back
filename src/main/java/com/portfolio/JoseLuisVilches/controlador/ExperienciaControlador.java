@@ -1,4 +1,3 @@
-
 package com.portfolio.JoseLuisVilches.controlador;
 
 import com.portfolio.JoseLuisVilches.excepciones.ResourceNotFoundException;
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/experiencia")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ExperienciaControlador {
-    
+
     @Autowired
     private ExperienciaRepositorio repositorio;
 
@@ -33,18 +33,20 @@ public class ExperienciaControlador {
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
         return ResponseEntity.ok(experiencia);
     }
-    
+
     @GetMapping("/experiencias")
     public List<Experiencia> listarExperiencia() {
         return repositorio.findAll();
     }
-    
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public Experiencia crearExperiencia(@RequestBody Experiencia experiencia) {
         return repositorio.save(experiencia);
     }
-    
-     @PutMapping("/editar/{id}")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Experiencia> actualizarExperiencia(@PathVariable Long id, @RequestBody Experiencia nuevaExperiencia) {
         Experiencia experiencia = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
@@ -60,7 +62,8 @@ public class ExperienciaControlador {
         Experiencia experienciaActualizada = repositorio.save(experiencia);
         return ResponseEntity.ok(experienciaActualizada);
     }
-    
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarExperiencia(@PathVariable Long id) {
         Experiencia experiencia = repositorio.findById(id)
@@ -71,5 +74,5 @@ public class ExperienciaControlador {
         respuesta.put("eliminar", Boolean.TRUE);
         return ResponseEntity.ok(respuesta);
     }
-    
+
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,11 +44,13 @@ public class PersonaControlador {
         return repositorio.findAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public Persona crearPersona(@RequestBody Persona persona) {
         return repositorio.save(persona);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
     public ResponseEntity<Persona> actualizarPerfil(@PathVariable Long id, @RequestBody Persona nuevaPersona) {
         Persona persona = repositorio.findById(id)
@@ -70,6 +73,7 @@ public class PersonaControlador {
         return ResponseEntity.ok(perfilActualizado);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarPersona(@PathVariable Long id) {
         Persona persona = repositorio.findById(id)

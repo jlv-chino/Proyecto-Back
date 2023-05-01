@@ -1,4 +1,3 @@
-
 package com.portfolio.JoseLuisVilches.controlador;
 
 import com.portfolio.JoseLuisVilches.excepciones.ResourceNotFoundException;
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/educacion")
 @CrossOrigin(origins = "http://localhost:4200")
 public class EducacionControlador {
-    
+
     @Autowired
     private EducacionRepositorio repositorio;
 
@@ -33,18 +33,20 @@ public class EducacionControlador {
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
         return ResponseEntity.ok(educacion);
     }
-    
+
     @GetMapping("/educaciones")
     public List<Educacion> listarEducacion() {
         return repositorio.findAll();
     }
-    
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public Educacion crearEducacion(@RequestBody Educacion educacion) {
         return repositorio.save(educacion);
     }
-    
-     @PutMapping("/editar/{id}")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Educacion> actualizarEducacion(@PathVariable Long id, @RequestBody Educacion nuevaEducacion) {
         Educacion educacion = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
@@ -57,7 +59,8 @@ public class EducacionControlador {
         Educacion educacionActualizada = repositorio.save(educacion);
         return ResponseEntity.ok(educacionActualizada);
     }
-    
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarEducacion(@PathVariable Long id) {
         Educacion educacion = repositorio.findById(id)
@@ -68,5 +71,5 @@ public class EducacionControlador {
         respuesta.put("eliminar", Boolean.TRUE);
         return ResponseEntity.ok(respuesta);
     }
-    
+
 }
