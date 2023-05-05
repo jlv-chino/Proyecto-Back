@@ -33,11 +33,6 @@ public class PersonaControlador {
                 .orElseThrow(() -> new ResourceNotFoundException("No existe ese ID : " + id));
         return ResponseEntity.ok(persona);
     }
-
-    /*@GetMapping("")
-    public Persona findPersona(){
-        return repositorio.findPersona((long)1);  
-    }*/
     
     @GetMapping("/personas")
     public List<Persona> listarPersonas() {
@@ -66,8 +61,6 @@ public class PersonaControlador {
         persona.setEmail(nuevaPersona.getEmail());
         persona.setTitulo_acerca_de(nuevaPersona.getTitulo_acerca_de());
         persona.setAcerca_de(nuevaPersona.getAcerca_de());
-        persona.setUser(nuevaPersona.getUser());
-        persona.setPassword(nuevaPersona.getPassword());
 
         Persona perfilActualizado = repositorio.save(persona);
         return ResponseEntity.ok(perfilActualizado);

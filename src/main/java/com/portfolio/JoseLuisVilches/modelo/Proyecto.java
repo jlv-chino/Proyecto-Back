@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +21,24 @@ public class Proyecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
+    @NotNull
+    @Size(min = 5, max = 50, message = "no cumple con la longitud")
     private String nombre_proyecto;
+    
+    @NotNull
+    @Size(min = 5, max = 100, message = "no cumple con la longitud")
     private String url_repositorio;
+    
+    @NotNull
+    @Size(min = 5, max = 100, message = "no cumple con la longitud")
     private String url_deploy;
+    
+    @NotNull
+    @Size(min = 10, max = 500, message = "no cumple con la longitud")
     private String descripcion_proyecto;
+    
+    @NotNull
+    @Size(min = 5, max = 100, message = "no cumple con la longitud")
     private String imagen_proyecto;
 
     public Proyecto() {

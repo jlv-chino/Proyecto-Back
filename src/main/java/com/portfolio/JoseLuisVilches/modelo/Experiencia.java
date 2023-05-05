@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +20,28 @@ public class Experiencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
+    @Size(min = 5, max = 50, message = "no cumple con la longitud")
     String puesto_experiencia;
+    
+    @NotNull
+    @Size(min = 2, max = 30, message = "no cumple con la longitud")
     String compania_experiencia;
+    
+    @NotNull
+    @Size(min = 5, max = 30, message = "no cumple con la longitud")
     String modalidad_experiencia;
+    
+    @NotNull
+    @Size(min = 5, max = 100, message = "no cumple con la longitud")
     String imagen_experiencia;
+    
+    @NotNull
     String inicio_experiencia;
+    
+    @NotNull
     String fin_experiencia;
+    
     int tiempo_experiencia;
 
     public Experiencia() {

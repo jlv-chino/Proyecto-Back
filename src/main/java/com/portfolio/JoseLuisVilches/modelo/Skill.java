@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +20,11 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
+    @Size(min = 10, max = 50, message = "no cumple con la longitud")
     private String titulo_skill;
+    
+    @NotNull
     private int porcentaje_skill;
 
     public Skill() {
